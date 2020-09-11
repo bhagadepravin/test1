@@ -12,3 +12,35 @@ If you want your website to be at `YOUR-USERNAME.github.io`, that's what you mus
 **If you enjoy this theme, please consider [supporting me](https://www.paypal.me/raviriley) to continue developing and maintaining it.**
 
 [![Support via PayPal](https://cdn.rawgit.com/twolfson/paypal-github-button/1.0.0/dist/button.svg)](https://www.paypal.me/raviriley)
+
+```
+I need output of
+
+(working & non-working)
+ls -ltr /var/lib/ambari-agent/keys/
+
+On non-working 
+
+/var/lib/ambari-agent/keys/
+just keep:
+
+/var/lib/ambari-agent/keys/<hostname>.crt 
+/var/lib/ambari-agent/keys/<hostname>.key 
+/var/lib/ambari-agent/keys/ca.crrt
+
+hostname should match the CN name:
+
+they can cross check:
+
+openssl x509 -in /var/lib/ambari-agent/keys/<hostname>.crt  -text -noout 
+
+See if there is any diff in working node crt and non-working crt.
+
+
+empty the below dir:
+ cd /var/lib/ambari-server/keys/db/newcerts 
+
+
+
+ openssl ca -config /var/lib/ambari-server/keys/ca.config -in /var/lib/ambari-server/keys/ambari-server.csr -out /var/lib/ambari-server/keys/ambari-server.crt -batch -passin file:/var/lib/ambari-server/keys/pass.txt -keyfile /var/lib/ambari-server/keys/ca.key -cert /var/lib/ambari-server/keys/ca.crt 
+```
